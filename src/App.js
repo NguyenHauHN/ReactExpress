@@ -1,20 +1,58 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {actionCreators} from "./todoListRedux";
+import List from './List';
+import Input from './Input';
+import Title from './Title';
 
 class App extends Component {
+  state = {}
+  componentWillMount(){
+    const {store} = this.props;
+    const {todos} = store.getState();
+    this.setState({todos});
+    this.unsubscribe =  store.subscribe(() => {
+      const {todos} = store.getState();
+      this.setState({todos});
+    })
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe();
+  }
+
+  onAddTodo = (text) => {
+    const {store} = this.props;
+    store.dispatch(actionCreators.add(text));
+  };
+
+  onRemoveTodo = (index) => {
+    const {store} = this.props;
+    store.dispatch(actionCreators.remove(index))
+  };
+
   render() {
+    const {todos} = this.state;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div style={styles.container}>
+        <Title>To-do List</Title>
+        <Input
+          placeholder={"Type a to do, then hit Enter!"}
+          onSubmitEditing ={this.onAddTodo}
+        />
+        <List list={todos} onClickItem={this.onRemoveTodo}/>
       </div>
+
     );
+  }
+}
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column'
   }
 }
 
