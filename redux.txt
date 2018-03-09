@@ -1,0 +1,20 @@
+Redux https://www.valentinog.com/blog/react-redux-tutorial-beginners/
+(1) quản lý state của component  ---> reducer phải return một state
+	Nó đưa cho component phần state mà component cần ---> trong ứng dụng lớn, rất phức tạp để một component quản lý và update state
+ Redux giữ state trong một single location
+(2) là một framework agnostri
+(3) store gắn kết các thành phần của redux: reducer, action
+	State của ứng dụng sống trong store
+(4) state đến từ reducer
+	Reducer là một function javascript nhận hai tham số là: state hiện tại và action
+(5) một cách để thay đổi state là gửi tín hiệu tới store
+	Tín hiệu này là action
+	"Dispatching an action" là qus trình gửi tín hiệu đi, thông báo cho store rằng chúng ta muốn thay đổi state
+---> muốn thay đổi state cần gọi dispatch action
+---> action là tín hiệu của sự thay đổi state
+Action trong redux là một object, cần một thuộc tính type mô tả state thay đổi như nào, có thể bao gồm 
+payload  là một article mới để add vào state hiện tại 
+(6) một cách tốt là wrap mọi action vào trong một function (là một action creator)
+(7) getState: truy cập state hiện tại của ứng dụng
+	dispatch: gửi action
+	subscribe: nghe sự thay đổi state
