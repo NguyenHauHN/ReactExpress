@@ -11,10 +11,18 @@ const store = createStore(reducer, initialState);
 store.dispatch({type: 'INCREMENT'});
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e){
+        console.log(e);
+    }
 
     render() {
         return (
-            <div style={{fontSize: 100}}>
+            <div style={{fontSize: 100}} onClick={(e) => this.handleClick(e)}>
                 {store.getState().count}
             </div>
         );
