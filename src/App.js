@@ -1,21 +1,50 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
+import Title from './Title';
+import List from './List';
+import Input from './Input';
+import {actionCreators} from "./todoListRedux";
+
+
+const mapStateToProps = (state) => ({todos: state.todos});
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+
+    onAddTodo = (text) => {
+        const {dispatch} = this.props;
+
+        dispatch(actionCreators.add(text));
+    }
+
+    onRemoveToto = (index) => {
+        const {dispatch} = this.props;
+
+        dispatch(actionCreators.remove(index));
+    }
+
+    render() {
+        const {todos} = this.props;
+        return (
+            <div className="App">
+                <Title children={"Todo List"}/>
+                <Input
+                    placeholder={"Type a todo, then hit Enter"}
+                    onSubmmitEditing={this.onAddTodo}
+                />
+                <List list={todos} onClickItem={this.onRemoveToto}/>
+            </div>
+        );
+    }
 }
 
-export default App;
+const style = {
+    container: {
+        display: 'flex',
+        flexDirection: 'column'
+    }
+};
+
+
+export default connect(mapStateToProps)(App);
